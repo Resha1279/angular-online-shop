@@ -1,0 +1,35 @@
+<div class="container my-5">
+  <h5>Cart</h5>
+  <hr>
+  <div class="row">
+    <div class="col-md-8">
+      <div *ngFor="let product of products" class="mb-2">
+        <div class="card">
+          <div class="row no-gutters p-0">
+            <div class="card-header image-container p-0">
+              <img src="{{product.imageUrl}}" alt="image">
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">{{product.name}}</h5>
+              <span class="border-right pr-2 mr-2">{{product.rate}}</span>
+              <span>{{product.review}}<span>&nbsp;reviews</span></span>
+              <hr>
+              <p>{{product.price}}</p>
+              <p>quantity</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4 total pb-2 card">
+      <div class="card-body">
+        <h5 class="card-title">Total</h5>
+        <h3>Rs 300</h3>
+        <button>Check Out</button>
+      </div>
+
+    </div>
+  </div>
+</div>
