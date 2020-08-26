@@ -15,7 +15,10 @@
               <span>{{product.review}}<span>&nbsp;reviews</span></span>
               <hr>
               <p>{{product.price}}</p>
-              <p>quantity</p>
+              <p></p>
+              <button (click)="onCartItemDelete(product.id)">Buy Now</button>
+              <button routerLink="/product-detail/{{product.id}}">View Details</button>
+              <button (click)="onCartItemDelete(product.id)">Delete</button>
             </div>
           </div>
 
