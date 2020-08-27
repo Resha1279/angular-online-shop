@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ProductInterface } from 'src/app/product/product-interface';
@@ -10,7 +10,6 @@ import { error } from '@angular/compiler/src/util';
   providedIn: 'root',
 })
 export class CartService {
-  //cartIds: number;
   private url: string = 'http://localhost:3000/cart/';
 
   constructor(private http: HttpClient) {}
@@ -35,14 +34,12 @@ export class CartService {
   }
 
   deleteCartItem(id) {
-    let cart = 0;
-    return this.http.get(this.url).subscribe(
+    return this.getCart().subscribe(
       (result) => {
         for (const item in result) {
           if (result[item].productId == id) {
-            cart = result[item].id;
-            return this.http.delete(this.url + cart).subscribe(() => {
-              console.log('cart deleted');
+            this.http.delete(this.url + result[item].id).subscribe(() => {
+              console.log('cart deleted', item);
             });
           }
         }
@@ -51,5 +48,31 @@ export class CartService {
         console.error(error);
       }
     );
+  }
+
+  deleteOneItem(id) {
+    return this.getCart().subscribe(
+      (result) => {
+        for (const item in result) {
+          if (result[item].productId == id) {
+            return this.http
+              .delete(this.url + result[item].id)
+              .subscribe(() => {
+                console.log('cart deleted', item);
+              });
+          }
+        }
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+  }
+
+  public cartCount : number = 0
+  updateCount(){
+    this.getCart().subscribe(result=>{
+      this.cartCount = result.length
+    })
   }
 }

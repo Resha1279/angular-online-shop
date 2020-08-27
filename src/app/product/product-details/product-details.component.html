@@ -3,16 +3,15 @@
     <div class="col-md-8 row">
       <div class="col-md-6 card">
         <img src="{{product.imageUrl}}" alt="image" class="img-fluid pt-2">
-        <button class=" card-body p-0 m-2" (click)="onClickAddToCart()">Add to Cart</button>
+        <button type="button" class=" card-body p-0 m-2" (click)="onClickAddToCart()">Add to Cart</button>
       </div>
 
       <div class="col-md-6">
         <h4>{{product.name}}</h4>
-        <span>{{product.rate}}</span>
+        <span class="border-right pr-2 mr-2">{{product.rate}}</span>
         <span>{{product.review}}</span>
         <hr>
         <p>{{product.price}}</p>
-        <p>quantity</p>
       </div>
       <div class="card my-2 mr-2">
         <div class="card-header">Description</div>

@@ -35,8 +35,6 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   onClickAddToCart() {
-    this.cartservice.addToCart(this.productId).subscribe((result) => {
-      console.log('add to cart result', result);
-    });
+    this.cartservice.addToCart(this.productId).subscribe();
   }
 }

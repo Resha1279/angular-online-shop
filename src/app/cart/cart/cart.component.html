@@ -3,7 +3,7 @@
   <hr>
   <div class="row">
     <div class="col-md-8">
-      <div *ngFor="let product of products" class="mb-2">
+      <div *ngFor="let product of productsMerged" class="mb-2">
         <div class="card">
           <div class="row no-gutters p-0">
             <div class="card-header image-container p-0">
@@ -14,11 +14,19 @@
               <span class="border-right pr-2 mr-2">{{product.rate}}</span>
               <span>{{product.review}}<span>&nbsp;reviews</span></span>
               <hr>
-              <p>{{product.price}}</p>
-              <p></p>
-              <button (click)="onCartItemDelete(product.id)">Buy Now</button>
-              <button routerLink="/product-detail/{{product.id}}">View Details</button>
-              <button (click)="onCartItemDelete(product.id)">Delete</button>
+              <p><span>Rs&nbsp;</span>{{product.price}}</p>
+              <p>
+                <span>
+                  <button type="button" (click)="onClickMinus(product.id)">-</button>
+                </span>
+                <input type="text" disabled value="{{product.count}}">
+                <span>
+                  <button type="button" (click)="onClickPlus(product.id)">+</button>
+                </span>
+              </p>
+              <button type="button">Buy Now</button>
+              <button type="button" routerLink="/product-detail/{{product.id}}">View Details</button>
+              <button type="button" (click)="onCartItemDelete(product.id)">Delete</button>
             </div>
           </div>
 
@@ -29,7 +37,7 @@
     <div class="col-md-4 total pb-2 card">
       <div class="card-body">
         <h5 class="card-title">Total</h5>
-        <h3>Rs 300</h3>
+        <h3><span>Rs&nbsp;</span>{{total}}</h3>
         <button>Check Out</button>
       </div>
 
