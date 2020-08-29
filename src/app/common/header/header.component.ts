@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CartService } from 'src/app/service/cart.service';
+import { faShoppingCart, faSearch } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-header',
@@ -8,12 +9,19 @@ import { CartService } from 'src/app/service/cart.service';
 })
 export class HeaderComponent implements OnInit {
   cartCount: number = 0;
+  faShoppingCart = faShoppingCart;
+  faSearch = faSearch;
 
-  constructor(private cartservice: CartService) {}
+  constructor(public cartservice: CartService) {}
 
   ngOnInit(): void {
-    this.cartservice.getCart().subscribe((result) => {
-      this.cartCount = result.length;
+    this.getCartCount();
+  }
+
+  getCartCount() {
+    this.cartservice.updateCount();
+    this.cartservice.cartCount.subscribe((count) => {
+      this.cartCount = count;
     });
   }
 }

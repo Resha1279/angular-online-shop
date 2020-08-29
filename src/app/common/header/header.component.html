@@ -2,42 +2,49 @@
 
 
   <div class="container search-header">
-    <div class="brand" routerLink="/">
-      <h2>SHOPP</h2>
+    <div class="brand pr-5 py-1" routerLink="/">
+      <img src="assets/images/logo-Shopp.png" alt="" class="img-fluid px-3">
     </div>
     <div>
       <div class="search-conainer">
-        <button class="search">Categories</button>
-        <input type="text" placeholder="Search" class="search search-input">
-        <i class="search search-icon">icon</i>
+        <button class="btn search categories">Categories</button>
+        <input type="text" placeholder="Search" class="search pl-3 search-input">
+        <fa-icon [icon]="faSearch" class=" btn search search-icon">icon</fa-icon>
       </div>
     </div>
     <div class="account">
-      <a>Sign in</a>
+      <button class="btn sign-in">LOGIN</button>
     </div>
   </div>
 
-  <div class="container nav-container">
 
-    <div class="nav-items">
-      <a class="nav-links">
-        Today's Deals
-      </a>
-      <a class="nav-links">
-        Track My Order
-      </a>
-      <a class="nav-links">
-        Help Center
-      </a>
-      <a class="nav-links">
-        Customer Care
-      </a>
-      <a class="nav-links">
-        Sell on Shopp
-      </a>
-    </div>
-    <div class="cart" routerLink="cart">
-      <a>Cart <span>{{cartCount}}</span></a>
+  <div class="nav-container">
+    <div class="row container">
+      <div class="col-md-2"></div>
+      <div class="col-md-8 nav-items">
+        <a class="nav-links">
+          Today's Deals
+        </a>
+        <a class="nav-links">
+          Track My Order
+        </a>
+        <a class="nav-links">
+          Help Center
+        </a>
+        <a class="nav-links">
+          Customer Care
+        </a>
+        <a class="nav-links">
+          Sell on Shopp
+        </a>
+      </div>
+      <div class="col-md-2 cart-container my-auto p-0">
+        <div class="cart py-1" routerLink="cart">
+          <a>
+            <fa-icon [icon]="faShoppingCart" class="mr-2"></fa-icon> <span>{{cartCount}}</span>
+          </a>
+        </div>
+      </div>
     </div>
   </div>
 

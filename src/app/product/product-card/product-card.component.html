@@ -1,10 +1,15 @@
 <div class="card" routerLink="product-detail/{{product.id}}">
   <div class="card-header p-0 m-0">
-    <img src="{{product.imageUrl}}" class="img-fluid" alt="image">
+    <img src="{{product.imageUrl}}" default="assets/images/placeholder.jpg" class="img-fluid" alt="image">
   </div>
   <div class="card-body">
-    <h6>{{product.name}}</h6>
-    <span>{{product.rate}}</span>
-    <span>{{product.price}}</span>
+    <p class="name">{{product.name}}</p>
+    <span class="rating">
+      <app-star-rating [rating]="product.rate" class="text-warning">
+
+      </app-star-rating>
+
+    </span>
+    <h5 class="mb-0 pb-0">Rs&nbsp;{{product.price}}<span></span></h5>
   </div>
 </div>

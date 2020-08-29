@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CartService } from 'src/app/service/cart.service';
 import { ProductService } from 'src/app/service/product.service';
 import { ProductInterface } from 'src/app/product/product-interface';
+import { faPlus, faMinus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { CartInterface } from 'src/app/cart/cart-interface';
 import { map } from 'rxjs/operators';
 
@@ -11,12 +12,17 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./cart.component.sass'],
 })
 export class CartComponent implements OnInit {
+  isLoading: boolean = true;
 
   cartIds: Array<number> = [];
   products: Array<ProductInterface> = [];
   cartCount: Array<any> = [];
   productsMerged: Array<any> = [];
   total: number = 0;
+
+  faPlusSquare = faPlus;
+  faMinusSquare = faMinus;
+  faTrash = faTrash;
 
   constructor(
     private cartservice: CartService,
@@ -28,25 +34,39 @@ export class CartComponent implements OnInit {
   }
 
   loadCart() {
-    this.cartservice.getCart().subscribe((result) => {
-      this.cartIds = [...new Set(result.map((item) => item.productId))];
-
-      this.getCartItemCounts(result);
-
-      this.loadProducts();
-    });
+    this.cartservice.getCart().subscribe(
+      (result) => {
+        this.cartIds = [...new Set(result.map((item) => item.productId))];
+        console.log('cart iids', this.cartIds);
+        this.getCartItemCounts(result);
+      },
+      (error) => {
+        console.error(error);
+      },
+      () => {
+        this.loadProducts();
+      }
+    );
   }
 
   loadProducts() {
     let c = 0;
     this.cartIds.forEach((id) => {
-      this.productservice.getProduct(id).subscribe((data) => {
-        this.products.push(data);
-        c++;
-        if (c === this.cartIds.length) {
-          this.mergeProductsCounts();
+      this.productservice.getProduct(id).subscribe(
+        (data) => {
+          this.products.push(data);
+        },
+        (error) => {
+          console.error(error);
+        },
+        () => {
+          c++;
+          if (c === this.cartIds.length) {
+            this.mergeProductsCounts();
+            this.isLoading = false;
+          }
         }
-      });
+      );
     });
   }
 
@@ -59,9 +79,11 @@ export class CartComponent implements OnInit {
       }
     }
     this.getSum(this.productsMerged);
+    this.cartservice.updateCount();
   }
 
   getCartItemCounts(result) {
+    console.log('result for counting cart items', result);
     let counts = result.reduce((p, c) => {
       let id = c.productId;
       if (!p.hasOwnProperty(id)) {
@@ -74,6 +96,8 @@ export class CartComponent implements OnInit {
     this.cartCount = Object.keys(counts).map((k) => {
       return { id: +k, count: counts[k] };
     });
+
+    console.log('cart count', this.cartCount);
   }
 
   mergeProductsCounts() {
@@ -84,24 +108,49 @@ export class CartComponent implements OnInit {
       });
     }
 
+    console.log(this.productsMerged);
+
     this.getSum(this.productsMerged);
   }
 
   getSum(data) {
     this.total = data.reduce((sum, { price, count }) => sum + price * count, 0);
+    this.cartservice.updateCount();
   }
 
   onClickPlus(id) {
-    this.cartservice.addToCart(id).subscribe();
-    this.productsMerged.find((item) => (item.count = item.count + 1));
-    this.getSum(this.productsMerged);
+    this.productsMerged.forEach((item) => {
+      if (item.id === id) {
+        this.cartservice.addToCart(id).subscribe(
+          () => {
+            item.count = item.count + 1;
+          },
+          (error) => {
+            console.error(error);
+          },
+          () => {
+            this.getSum(this.productsMerged);
+          }
+        );
+      }
+    });
   }
 
   onClickMinus(id) {
-    if (this.productsMerged.find((item) => item.count > 1)) {
-      this.cartservice.deleteOneItem(id);
-      this.productsMerged.find((item) => (item.count = item.count + -1));
-      this.getSum(this.productsMerged);
-    }
+    this.productsMerged.forEach((item) => {
+      if (item.id === id && item.count > 1) {
+        this.cartservice.deleteOneItem(id).subscribe(
+          () => {
+            item.count = item.count - 1;
+          },
+          (error) => {
+            console.error(error);
+          },
+          () => {
+            this.getSum(this.productsMerged);
+          }
+        );
+      }
+    });
   }
 }

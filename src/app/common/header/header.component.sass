@@ -1,10 +1,13 @@
 
 .header
-  poistion: fixed
-  width: 100%
+  position: fixed
   top: 0
+  left: 0
+  width: 100%
   color: #ffffff
   background-color: #3C464F
+  box-shadow: 0px 2px 2px 2px #00000011
+  z-index: 100
 
 .search-header
   display: grid
@@ -20,28 +23,56 @@
 
 .search
   height: 40px
-  padding: 10px
+
+.search-icon, .categories
+  background-color: #479CCF
+  color: white
+  text-align: center
+  border-radius: 0
 
 .search-icon
-  background-color: white
-  color: black
-  text-align: center
+  border-top-right-radius: 20px
+  border-bottom-right-radius: 20px
+
+.categories
+  border-top-left-radius: 20px
+  border-bottom-left-radius: 20px
 
 .account
   text-align: right
 
 
 .nav-container
-  display: flex
-  background-color: #3C464F
-  color: #ffffff
-  height: 40px
-  align-items: center
+  background-color: #479CCF
 
 .nav-items
-  width: 60%
   display: flex
-  margin: auto
   justify-content: space-between
+  align-items: center
+  height: 40px
 
 
+.sign-in
+  border-radius: 50px
+  font-weight: bold
+  width: 90px
+  background: none
+  border: 2px solid #479CCF
+  color: #479CCF
+
+.sign-in:hover
+  background: #479CCF
+  border: 2px solid #479CCF
+  color: white
+
+
+.cart-container
+  display: flex
+  justify-content: flex-end
+
+.cart
+  background-color: #3C464F
+  align-items: center
+  width: 80px
+  border-radius: 20px
+  text-align: center

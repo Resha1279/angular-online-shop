@@ -3,6 +3,7 @@ import { ProductService } from 'src/app/service/product.service';
 import { CartService } from 'src/app/service/cart.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ProductInterface } from 'src/app/product/product-interface';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-product-details',
@@ -11,7 +12,6 @@ import { ProductInterface } from 'src/app/product/product-interface';
 })
 export class ProductDetailsComponent implements OnInit {
   public productId: number;
-  public quantity: number = 1;
 
   product: ProductInterface;
 
@@ -35,6 +35,8 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   onClickAddToCart() {
-    this.cartservice.addToCart(this.productId).subscribe();
+    this.cartservice.addToCart(this.productId).subscribe(() => {
+      this.cartservice.updateCount();
+    });
   }
 }

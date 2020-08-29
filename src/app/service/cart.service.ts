@@ -1,16 +1,18 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, Subject, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ProductInterface } from 'src/app/product/product-interface';
 import { CartInterface } from 'src/app/cart/cart-interface';
-import { error } from '@angular/compiler/src/util';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CartService {
   private url: string = 'http://localhost:3000/cart/';
+  cartIdArray: Array<CartInterface> = [];
+
+  cartCount = new Subject<number>();
 
   constructor(private http: HttpClient) {}
 
@@ -19,60 +21,46 @@ export class CartService {
   }
 
   getCart() {
-    let cartIdArray: Array<CartInterface> = [];
-
+    let cartArray: Array<CartInterface> = [];
     return this.http.get(this.url).pipe(
       map((data) => {
         for (const index in data) {
           if (data.hasOwnProperty(index)) {
-            cartIdArray.push(data[index]);
+            cartArray.push(data[index]);
           }
         }
-        return cartIdArray;
+        this.cartIdArray = cartArray;
+        return cartArray;
       })
     );
   }
 
   deleteCartItem(id) {
-    return this.getCart().subscribe(
-      (result) => {
-        for (const item in result) {
-          if (result[item].productId == id) {
-            this.http.delete(this.url + result[item].id).subscribe(() => {
-              console.log('cart deleted', item);
-            });
-          }
-        }
-      },
-      (error) => {
-        console.error(error);
+    this.cartIdArray.forEach((item) => {
+      if (item.productId === id) {
+        this.http.delete(this.url + item.id).subscribe();
       }
-    );
+    });
   }
 
   deleteOneItem(id) {
-    return this.getCart().subscribe(
-      (result) => {
-        for (const item in result) {
-          if (result[item].productId == id) {
-            return this.http
-              .delete(this.url + result[item].id)
-              .subscribe(() => {
-                console.log('cart deleted', item);
-              });
-          }
-        }
-      },
-      (error) => {
-        console.error(error);
-      }
-    );
+    let value = this.cartIdArray.find((item) => {
+      return item.productId === id;
+    });
+    console.log('found', value);
+    return this.http.delete(this.url + value.id);
   }
 
-  public cartCount : number = 0
-  updateCount(){
-    this.getCart().subscribe(result=>{
-      this.cartCount = result.length
-    })
+  updateCount() {
+    let count = 0;
+    this.getCart().subscribe(
+      (result) => {
+        count = result.length;
+      },
+      () => {},
+      () => {
+        this.cartCount.next(count);
+      }
+    );
   }
 }

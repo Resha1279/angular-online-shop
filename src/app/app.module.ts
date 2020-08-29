@@ -17,6 +17,10 @@ import { CartComponent } from './cart/cart/cart.component';
 
 import { ProductService } from './service/product.service';
 import { CartService } from './service/cart.service';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { StarRatingComponent } from './template/star-rating/star-rating.component';
+import { ImagePlaceholderDirective } from './image-placeholder.directive';
+import { PlaceholderComponent } from './template/placeholder/placeholder.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +32,9 @@ import { CartService } from './service/cart.service';
     ProductDetailsComponent,
     BannerComponent,
     CartComponent,
+    StarRatingComponent,
+    ImagePlaceholderDirective,
+    PlaceholderComponent,
   ],
   imports: [
     BrowserModule,
@@ -35,6 +42,7 @@ import { CartService } from './service/cart.service';
     CarouselModule.forRoot(),
     BrowserAnimationsModule,
     HttpClientModule,
+    FontAwesomeModule,
   ],
   providers: [ProductService, CartService],
   bootstrap: [AppComponent],

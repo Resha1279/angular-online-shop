@@ -1,32 +1,85 @@
-<div class="container my-5">
+<div class="container cart-wrapper">
   <h5>Cart</h5>
   <hr>
-  <div class="row">
-    <div class="col-md-8">
+
+  <div *ngIf="isLoading">
+    <p>Loading your cart.....</p>
+  </div>
+
+  <div *ngIf="!isLoading" class="row">
+    <div class="cart-container col-md-9">
       <div *ngFor="let product of productsMerged" class="mb-2">
-        <div class="card">
+        <div class="card border-0">
           <div class="row no-gutters p-0">
             <div class="card-header image-container p-0">
-              <img src="{{product.imageUrl}}" alt="image">
+              <img src="{{product.imageUrl}}" default="assets/images/placeholder.jpg" alt="image">
             </div>
-            <div class="card-body">
-              <h5 class="card-title">{{product.name}}</h5>
-              <span class="border-right pr-2 mr-2">{{product.rate}}</span>
-              <span>{{product.review}}<span>&nbsp;reviews</span></span>
+            <div class="card-body bg-light">
+              <div class="row">
+                <div class="col-md-9">
+                  <h6 class="card-title m-0">{{product.name}}</h6>
+                  <span class="border-right pr-2 mr-2 text-warning rating">
+                    <app-star-rating [rating]="product.rate"></app-star-rating>
+                  </span>
+                  <span class="border-right pr-2 mr-2">{{product.review}}<span>&nbsp;reviews</span></span>
+                  <a type="button" routerLink="/product-detail/{{product.id}}">View Details</a>
+                </div>
+                <div class="col-md-3 text-right">
+
+                  <div>
+                    <button type="button" class="btn rounded-circle text-danger" (click)="onCartItemDelete(product.id)">
+                      <fa-icon [icon]="faTrash"></fa-icon>
+                    </button>
+                  </div>
+
+                </div>
+              </div>
+
+
+
+
+
+
               <hr>
-              <p><span>Rs&nbsp;</span>{{product.price}}</p>
-              <p>
-                <span>
-                  <button type="button" (click)="onClickMinus(product.id)">-</button>
-                </span>
-                <input type="text" disabled value="{{product.count}}">
-                <span>
-                  <button type="button" (click)="onClickPlus(product.id)">+</button>
-                </span>
-              </p>
-              <button type="button">Buy Now</button>
-              <button type="button" routerLink="/product-detail/{{product.id}}">View Details</button>
-              <button type="button" (click)="onCartItemDelete(product.id)">Delete</button>
+
+
+
+
+
+              <div class="row align-items-center">
+                <div class="col-md-4">
+                  <div class="row quantity-container ml-3">
+
+                    <button class="quantity-icon" type="button" (click)="onClickMinus(product.id)">
+                      <fa-icon [icon]="faMinusSquare" class=""></fa-icon>
+                    </button>
+                    <div class="quantity-text">
+                      <input type="text" class="text-center w-100 m-0 " disabled value="{{product.count}}">
+                    </div>
+
+                    <button class="quantity-icon" type="button" (click)="onClickPlus(product.id)">
+                      <fa-icon [icon]="faPlusSquare" class=""></fa-icon>
+                    </button>
+
+                  </div>
+                </div>
+
+                <div class="col-md-4 text-center align-items-center">
+                  <h5><span>Rs&nbsp;</span>{{product.price}}</h5>
+                </div>
+
+                <div class="col-md-4 text-right">
+
+                  <button type="button" class="btn">Buy Now</button>
+                </div>
+              </div>
+
+
+              <div class="button-container">
+
+
+              </div>
+
             </div>
           </div>
 
@@ -34,11 +87,11 @@
       </div>
     </div>
 
-    <div class="col-md-4 total pb-2 card">
+    <div class="col-md-3 total pb-2 card border-0 bg-light">
       <div class="card-body">
         <h5 class="card-title">Total</h5>
         <h3><span>Rs&nbsp;</span>{{total}}</h3>
-        <button>Check Out</button>
+        <button type="button" class="btn">Check Out</button>
       </div>
 
     </div>

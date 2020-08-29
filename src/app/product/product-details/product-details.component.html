@@ -1,18 +1,26 @@
-<div class="container my-5">
+<div class="container details-wrapper">
+  <h5>Details</h5>
+  <hr>
   <div class="row">
     <div class="col-md-8 row">
       <div class="col-md-6 card">
-        <img src="{{product.imageUrl}}" alt="image" class="img-fluid pt-2">
-        <button type="button" class=" card-body p-0 m-2" (click)="onClickAddToCart()">Add to Cart</button>
+        <img src="{{product.imageUrl}}" default="assets/images/placeholder.jpg" alt="image" class="img-fluid pt-2">
+
       </div>
 
       <div class="col-md-6">
         <h4>{{product.name}}</h4>
+        <span class="mr-2 text-warning">
+          <app-star-rating [rating]="product.rate"></app-star-rating>
+        </span>
         <span class="border-right pr-2 mr-2">{{product.rate}}</span>
-        <span>{{product.review}}</span>
+        <span>{{product.review}}&nbsp;reviews</span>
         <hr>
-        <p>{{product.price}}</p>
+        <p><span>Rs&nbsp;</span>{{product.price}}</p>
+        <button type="button" class="btn card-body my-2" (click)="onClickAddToCart()">Add to
+          Cart</button>
       </div>
+
       <div class="card my-2 mr-2">
         <div class="card-header">Description</div>
         <p class="card-body">{{product.content}}</p>
