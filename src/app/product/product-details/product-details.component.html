@@ -13,11 +13,11 @@
         <span class="mr-2 text-warning">
           <app-star-rating [rating]="product.rate"></app-star-rating>
         </span>
-        <span class="border-right pr-2 mr-2">{{product.rate}}</span>
+        <span class="border-right pr-2 mr-2">({{product.rate}})</span>
         <span>{{product.review}}&nbsp;reviews</span>
         <hr>
         <p><span>Rs&nbsp;</span>{{product.price}}</p>
-        <button type="button" class="btn card-body my-2" (click)="onClickAddToCart()">Add to
+        <button type="button" class="btn my-2" (click)="onClickAddToCart()">Add to
           Cart</button>
       </div>
 

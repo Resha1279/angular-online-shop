@@ -17,10 +17,13 @@ import { CartComponent } from './cart/cart/cart.component';
 
 import { ProductService } from './service/product.service';
 import { CartService } from './service/cart.service';
+import { CategoryService } from './service/category.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { StarRatingComponent } from './template/star-rating/star-rating.component';
 import { ImagePlaceholderDirective } from './image-placeholder.directive';
 import { PlaceholderComponent } from './template/placeholder/placeholder.component';
+import { CategoryListComponent } from './category/category-list/category-list.component';
+import { CategoryCardComponent } from './category/category-card/category-card.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +38,8 @@ import { PlaceholderComponent } from './template/placeholder/placeholder.compone
     StarRatingComponent,
     ImagePlaceholderDirective,
     PlaceholderComponent,
+    CategoryListComponent,
+    CategoryCardComponent,
   ],
   imports: [
     BrowserModule,
@@ -44,7 +49,7 @@ import { PlaceholderComponent } from './template/placeholder/placeholder.compone
     HttpClientModule,
     FontAwesomeModule,
   ],
-  providers: [ProductService, CartService],
+  providers: [ProductService, CartService, CategoryService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

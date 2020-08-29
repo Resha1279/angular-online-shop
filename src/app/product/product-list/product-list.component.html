@@ -1,9 +1,5 @@
 <app-banner></app-banner>
 
-<div class="container mt-5">
-  <h5>Our Products</h5>
-  <hr>
-</div>
 
 <div *ngIf="isLoading" class="row  container mt-3 mb-5">
   <div class="col-6 col-sm-4 col-md-3 col-lg-2">
@@ -25,6 +21,26 @@
     <app-placeholder></app-placeholder>
   </div>
 </div>
+
+<div *ngIf="!isLoading" class="container mt-5">
+  <h5>Shop by Categories</h5>
+  <hr>
+</div>
+
+<div *ngIf="!isLoading">
+  <div class="row container">
+    <div *ngFor="let category of categories" class="p-0 m-1">
+      <app-category-card [category]="category"></app-category-card>
+    </div>
+
+  </div>
+</div>
+
+<div *ngIf="!isLoading" class="container mt-5">
+  <h5>Fresh Arrivals</h5>
+  <hr>
+</div>
+
 
 <div *ngIf="!isLoading">
   <div class="row container my-3">
