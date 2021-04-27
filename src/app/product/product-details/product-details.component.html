@@ -3,12 +3,26 @@
   <hr>
   <div class="row">
     <div class="col-md-8 row">
-      <div class="col-md-6 card">
-        <img src="{{product.imageUrl}}" default="assets/images/placeholder.jpg" alt="image" class="img-fluid pt-2">
+      <div class="col-md-6">
+        <img src="{{productImage}}" default="assets/images/placeholder.jpg" alt="image" class="img-fluid default mt-2">
+
+        <div class="row w-100 justify-content-center mx-auto">
+          <div *ngIf="next" class="prev my-auto" (click)="onClickPrev()">
+            <fa-icon [icon]="faPrev"></fa-icon>
+          </div>
+          <div *ngFor="let image of slide" class="border mini-images m-1"
+            (click)="onClickImage(image, slide.indexOf(image))">
+            <img src="{{image}}" default="assets/images/placeholder.jpg" alt="image" class="img-fluid">
+          </div>
+
+          <div *ngIf="next" class="next my-auto" (click)="onClickNext()">
+            <fa-icon [icon]="faNext"></fa-icon>
+          </div>
+        </div>
 
       </div>
 
-      <div class="col-md-6">
+      <div class="col-md-3">
         <h4>{{product.name}}</h4>
         <span class="mr-2 text-warning">
           <app-star-rating [rating]="product.rate"></app-star-rating>

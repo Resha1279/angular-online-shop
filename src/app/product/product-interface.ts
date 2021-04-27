@@ -7,4 +7,5 @@ export interface ProductInterface {
   content: string;
   review: number;
   imageUrl: string;
+  images: Array<string>;
 }
